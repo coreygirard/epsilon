@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Login to Click</title>
+    <style>{{background_color}}</style>
+  </head>
+  <body>
+    <div style="margin:5cm">
+    </div>
+    <div style="margin:0 auto;
+                width:300px;
+                padding:0.5cm;
+                border-radius:5px;
+                background-color:{{frame_color}}">
+      <div style="text-align:right">
+        <a href="/register">Register</a>
+      </div>
+      <div style="margin:0.5cm auto;
+                  padding:0.5cm;
+                  border-radius:5px;
+                  background-color:{{cover_color}}">        
+        <form action="/login">
+          <spacer type="vertical" size="200">
+          <div style="text-align:center;
+                      margin:0cm">
+            <span style="color:red">{{response}}</span><br>
+            <input type="text" name="email" placeholder="john@smith.com"><br>
+            <input type="password" name="password" placeholder="p@$$w0rd"><br>
+            <input type="submit" value="Log in">
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
