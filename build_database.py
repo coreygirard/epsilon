@@ -14,8 +14,8 @@ raw = {
  'Control_theory':'''Control theory in control systems engineering deals with the control of continuously operating dynamical systems in engineered processes and machines. The objective is to develop a control model for controlling such systems using a control action in an optimum manner without delay or overshoot and ensuring control stability. To do this, a controller with the requisite corrective behaviour is required. This controller monitors the controlled process variable (PV), and compares it with the reference or set point (SP). The difference between actual and desired value of the process variable, called the error signal, or SP-PV error, is applied as feedback to generate a control action to bring the controlled process variable to the same value as the set point. Other aspects which are also studied are controllability and observability. On this is based the advanced type of automation that revolutionized manufacturing, aircraft, communications and other industries. This is feedback control, which is usually continuous and involves taking measurements using a sensor and making calculated adjustments to keep the measured variable within a set range by means of a "final control element", such as a control valve.[1] Extensive use is usually made of a diagrammatic style known as the block diagram. In it the transfer function, also known as the system function or network function, is a mathematical model of the relation between the input and output based on the differential equations describing the system. Control theory dates from the 19th century, when the theoretical basis for the operation of governors was first described by James Clerk Maxwell.[2] Control theory was further advanced by Edward Routh in 1874, Charles Sturm and in 1895, Adolf Hurwitz, who all contributed to the establishment of control stability criteria; and from 1922 onwards, the development of PID control theory by Nicolas Minorsky.[3] Although a major application of control theory is in control systems engineering, which deals with the design of process control systems for industry, other applications range far beyond this. As the general theory of feedback systems, control theory is useful wherever feedback occurs. A few examples are in physiology, electronics, climate modeling, machine design, ecosystems, navigation, neural networks, predator–prey interaction, gene expression, and production theory.[4]''',
  }
 
-with open('raw.json','w') as f:
-    json.dump(raw,f,indent=4)
+#with open('raw.json','w') as f:
+#    json.dump(raw,f,indent=4)
 
 class GenerateUUID(object):
     def __init__(self):
@@ -88,11 +88,6 @@ class DB(object):
 
 
 
-db = DB()
-
-
-for k,v in raw.items():
-    db.addDoc(k,v)
 
 
 
