@@ -76,9 +76,10 @@ class DB(object):
 
 db = DB()
 
-#with open('raw.json','r') as f:
-#    raw = json.load(f)
+with open('pages.json','r') as f:
+    raw = json.load(f)
 
+'''
 raw = {
     "Game_theory": "Game theory is \"the study of mathematical models of conflict and cooperation between intelligent rational decision-makers\". Game theory is mainly used in economics, political science, and psychology, as well as logic, computer science and biology.[1] Originally, it addressed zero-sum games, in which one person's gains result in losses for the other participants. Today, game theory applies to a wide range of behavioral relations, and is now an umbrella term for the science of logical decision making in humans, animals, and computers. Modern game theory began with the idea regarding the existence of mixed-strategy equilibria in two-person zero-sum games and its proof by John von Neumann. Von Neumann's original proof used the Brouwer fixed-point theorem on continuous mappings into compact convex sets, which became a standard method in game theory and mathematical economics. His paper was followed by the 1944 book Theory of Games and Economic Behavior, co-written with Oskar Morgenstern, which considered cooperative games of several players. The second edition of this book provided an axiomatic theory of expected utility, which allowed mathematical statisticians and economists to treat decision-making under uncertainty. This theory was developed extensively in the 1950s by many scholars. Game theory was later explicitly applied to biology in the 1970s, although similar developments go back at least as far as the 1930s. Game theory has been widely recognized as an important tool in many fields. With the Nobel Memorial Prize in Economic Sciences going to game theorist Jean Tirole in 2014, eleven game-theorists have now won the economics Nobel Prize. John Maynard Smith was awarded the Crafoord Prize for his application of game theory to biology.",
     "Decision_theory": "Decision theory (or the theory of choice) is the study of the reasoning underlying an agent's choices.[1] Decision theory can be broken into two branches: normative decision theory, which gives advice on how to make the best decisions, given a set of uncertain beliefs and a set of values; and descriptive decision theory, which analyzes how existing, possibly irrational agents actually make decisions. Closely related to the field of game theory,[2] decision theory is concerned with the choices of individual agents whereas game theory is concerned with interactions of agents whose decisions affect each other. Decision theory is an interdisciplinary topic, studied by economists, statisticians, psychologists, biologists,[3] political and other social scientists, philosophers,[4] and computer scientists. Empirical applications of this rich theory are usually done with the help of statistical and econometric methods, especially via the so-called choice models, such as probit and logit models. Estimation of such models is usually done via parametric, semi-parametric and non-parametric maximum likelihood methods.[5]",
@@ -90,19 +91,31 @@ raw = {
     "Theoretical_computer_science": "Theoretical computer science, or TCS, is a subset of general computer science and mathematics that focuses on more mathematical topics of computing and includes the theory of computation. It is difficult to circumscribe the theoretical areas precisely. The ACM's Special Interest Group on Algorithms and Computation Theory (SIGACT) provides the following description:[1] TCS covers a wide variety of topics including algorithms, data structures, computational complexity, parallel and distributed computation, probabilistic computation, quantum computation, automata theory, information theory, cryptography, program semantics and verification, machine learning, computational biology, computational economics, computational geometry, and computational number theory and algebra. Work in this field is often distinguished by its emphasis on mathematical technique and rigor. In this list, the ACM's journal Transactions on Computation Theory includes coding theory and computational learning theory, as well as theoretical computer science aspects of areas such as databases, information retrieval, economic models, and networks.[2] Despite this broad scope, the \"theory people\" in computer science self-identify as different from the \"applied people\"[citation needed]. Some characterize themselves as doing the \"(more fundamental) 'science(s)' underlying the field of computing.\"[3] Other \"theory-applied people\" suggest that it is impossible to separate theory and application. This means that the so-called \"theory people\" regularly use experimental science(s) done in less-theoretical areas such as software system research[citation needed]. It also means that there is more cooperation than mutually exclusive competition between theory and application[citation needed].",
     "Control_theory": "Control theory in control systems engineering deals with the control of continuously operating dynamical systems in engineered processes and machines. The objective is to develop a control model for controlling such systems using a control action in an optimum manner without delay or overshoot and ensuring control stability. To do this, a controller with the requisite corrective behaviour is required. This controller monitors the controlled process variable (PV), and compares it with the reference or set point (SP). The difference between actual and desired value of the process variable, called the error signal, or SP-PV error, is applied as feedback to generate a control action to bring the controlled process variable to the same value as the set point. Other aspects which are also studied are controllability and observability. On this is based the advanced type of automation that revolutionized manufacturing, aircraft, communications and other industries. This is feedback control, which is usually continuous and involves taking measurements using a sensor and making calculated adjustments to keep the measured variable within a set range by means of a \"final control element\", such as a control valve.[1] Extensive use is usually made of a diagrammatic style known as the block diagram. In it the transfer function, also known as the system function or network function, is a mathematical model of the relation between the input and output based on the differential equations describing the system. Control theory dates from the 19th century, when the theoretical basis for the operation of governors was first described by James Clerk Maxwell.[2] Control theory was further advanced by Edward Routh in 1874, Charles Sturm and in 1895, Adolf Hurwitz, who all contributed to the establishment of control stability criteria; and from 1922 onwards, the development of PID control theory by Nicolas Minorsky.[3] Although a major application of control theory is in control systems engineering, which deals with the design of process control systems for industry, other applications range far beyond this. As the general theory of feedback systems, control theory is useful wherever feedback occurs. A few examples are in physiology, electronics, climate modeling, machine design, ecosystems, navigation, neural networks, predator\u2013prey interaction, gene expression, and production theory.[4]"
 }
+'''
 
-for k,v in raw.items():
-    db.addDoc(k,v)
+for p in raw:
+    db.addDoc(p['title'],p['text'])
 
 
 
 app = Flask(__name__)
 
+
+
+
 @app.route('/')
 def home():
-    query = request.args.get('q')
+    return render_template('home.html')
 
-    return '\n'.join([re.sub('_',' ',result.title()) for result,score in db.query('theory')])
+@app.route('/search')
+def search():
+    query = request.args.get('q')
+    if query == None:
+        return redirect('/')
+    else:
+        query = query.split(' ')
+
+    return '\n'.join(['query:'+str(query)]+[re.sub('_',' ',result.title()) for result,score in db.query(query)])
 
 if __name__ == '__main__':
     app.run(debug=True)
