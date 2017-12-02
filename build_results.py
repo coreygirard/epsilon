@@ -24,6 +24,9 @@ class GenerateUUID(object):
 
 class Page(object):
     def __init__(self,uuid,page):
+        self.title = re.sub('_',' ',page['title'].title())
+        self.summary = page['summary']
+
         text = page['text']
         text = text.lower()
         text = re.sub('[.]',' ',text)
@@ -34,7 +37,7 @@ class Page(object):
 
         self.counter = Counter(self.ids)
 
-    def queryWord(self,q):
+    def queryId(self,q):
         return self.counter.get(q,0)/sum(self.counter.values())
 
 class DB(object):
@@ -43,39 +46,15 @@ class DB(object):
         self.page = {}
 
     def addPage(self,page):
-        title = re.sub('_',' ',page['title'].title())
         data = Page(self.uuid,page)
-        self.page[title] = data
+        self.page[data.title] = data
 
-    '''
-    def parse(self,s):
-        s = re.sub(r'[\[].*?[\]]',r'',s)
-        s = s.split(' ')
-        return Doc([self.uuid.get(e) for e in s])
+    def queryWord(self,word):
+        i = self.uuid.query(word)
+        sites = []
+        for k,v in self.page.items():
+            score = v.queryId(i)
+            if score > 0:
+                sites.append((score,k))
 
-    def queryWord(self,q):
-        results = {}
-        for k,v in self.doc.items():
-            n = v.counter.get(q,0)
-            if n != 0:
-                results[k] = n/sum(v.counter.values())
-
-        return results
-
-    def query(self,q):
-        q = [self.uuid.query(w) for w in q.split(' ')]
-
-        results = [self.queryWord(w) for w in q]
-
-        s = set(results[0].keys())
-        for i in range(1,len(results)):
-            s = s & set(results[i].keys())
-
-        score = {e:1.0 for e in s}
-        for result in results:
-            for k in score.keys():
-                score[k] *= result[k]
-
-        return sorted(list(score.items()),key=lambda x : -x[1])[:10]
-    '''
-
+        return [s[1] for s in reversed(sorted(sites))]
