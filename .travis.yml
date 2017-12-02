@@ -1,0 +1,8 @@
+language: python
+python:
+  - "3.6"
+script: coverage run src/tests.py
+before_install:
+  pip install codecov coverage
+after_success:
+  codecov --token=92031eb8-e08c-44c3-946f-7b3567ed7501
