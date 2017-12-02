@@ -7,7 +7,7 @@ class GenerateUUID(object):
         self.n = 0
 
     def get(self,e):
-        assert(type(e) == type('string'))
+        e = str(e)
         if e not in self.s.keys():
             self.s[e] = self.n
             self.n += 1
@@ -15,8 +15,7 @@ class GenerateUUID(object):
         return self.s[e]
 
     def query(self,e):
-        print(e)
-        assert(type(e) == type('string'))
+        e = str(e)
         if e in self.s.keys():
             return self.s[e]
         else:
@@ -51,6 +50,9 @@ class DB(object):
 
     def queryWord(self,word):
         i = self.uuid.query(word)
+        if i == None:
+            return []
+
         sites = []
         for k,v in self.page.items():
             score = v.queryId(i)
@@ -58,3 +60,6 @@ class DB(object):
                 sites.append((score,k))
 
         return [s[1] for s in reversed(sorted(sites))]
+
+    def query(self,q):
+        return self.queryWord(q)

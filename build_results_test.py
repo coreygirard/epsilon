@@ -87,9 +87,9 @@ class TestQuery(unittest.TestCase):
         for page in pages:
             db.addPage(page)
 
-        self.assertEqual(db.queryWord('disease'),['On Month Interview','Using Previous Words'])
-        self.assertEqual(db.queryWord('because'),['Using Previous Words','Simply Pm'])
-
+        self.assertEqual(db.queryWord(u'disease'),['On Month Interview','Using Previous Words'])
+        self.assertEqual(db.queryWord(u'because'),['Using Previous Words','Simply Pm'])
+        self.assertEqual(db.queryWord(u'nonexistent'),[])
 
 
 

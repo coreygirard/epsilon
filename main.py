@@ -17,9 +17,9 @@ db = build_results.DB()
 with open('pages.json','r') as f:
     pages = json.load(f)
 
-db = build_results.DB()
-for page in pages:
-    db.addPage(page)
+#db = build_results.DB()
+#for page in pages:
+#    db.addPage(page)
 
 @app.route('/')
 def home():
@@ -31,8 +31,10 @@ def search():
     if query == None:
         return redirect('/')
 
-    results = db.queryWord(query)
-    return results
+    return repr(db.page.values()[0].ids)
+
+    #results = db.query(query)
+    #return repr(results)
 
 
     #query = query.split(' ')
