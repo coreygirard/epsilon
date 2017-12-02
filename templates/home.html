@@ -113,23 +113,23 @@ function doWork() {
       if (!queryfield.classList.contains('is-focused')) {
           queryicon.innerHTML = "search";
 
-          //querybutton.style.height = '96px';
-          //querybutton.style.width = '96px';
+          querybutton.style.height = '96px';
+          querybutton.style.width = '96px';
           querybutton.classList.remove(c)
 
-          //queryicon.style.height = '72px';
-          //queryicon.style.width = '72px';
-          //queryicon.style.fontSize = '300%';
+          queryicon.style.height = '72px';
+          queryicon.style.width = '72px';
+          queryicon.style.fontSize = '300%';
           queryicon.classList.remove(ct)
       }
 
       if (queryfield.classList.contains('is-focused')) {
           queryicon.innerHTML = "done";
-          //querybutton.style.height = '32px';
-          //querybutton.style.width = '32px';
-          //queryicon.style.height = '24px';
-          //queryicon.style.width = '24px';
-          //queryicon.style.fontSize = 'initial';
+          querybutton.style.height = '32px';
+          querybutton.style.width = '32px';
+          queryicon.style.height = '24px';
+          queryicon.style.width = '24px';
+          queryicon.style.fontSize = 'initial';
 
           if (!querybutton.classList.contains(c)) {
               querybutton.className += " " + c;
