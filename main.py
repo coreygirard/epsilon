@@ -18,25 +18,28 @@ with open('pages.json','r') as f:
     pages = json.load(f)
 
 db = build_results.DB()
-for page in pages:
-    db.addPage(page)
+#for page in pages:
+#    db.addPage(page)
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-def makeNavbarButton(disabled,e):
-    if type(e) == type('string'):
+def makeNavbarButton(e):
+    disabled,label = e['disabled'],e['label']
+
+    if type(label) == type('string'):
         data = {'disabled':disabled,
-                'payload':Markup('  <i class="material-icons">{0}</i>'.format(e))}
+                'payload':Markup('  <i class="material-icons">{0}</i>'.format(label))}
     else:
         data = {'disabled':disabled,
-                'payload':Markup('  <span style="font-weight:400;font-size:20px;line-height:20px">{0}</span>'.format(e))}
+                'payload':Markup('  <span style="font-weight:400;font-size:20px;line-height:20px">{0}</span>'.format(label))}
 
     return render_template('results_navbar.html',**data)
 
 
 def makeNavbar(navbar):
+
     symbolToIconName = {'|<':'first_page',
                         '<': 'chevron_left',
                         '>': 'chevron_right',
@@ -44,14 +47,11 @@ def makeNavbar(navbar):
 
     button = []
     for n in navbar:
-        if type(n) == type(1):
-            if n == 2:
-                disabled = 'disabled'
-            else:
-                disabled = ''
-            button.append(makeNavbarButton(disabled,n))
-        elif n in symbolToIconName.keys():
-            button.append(makeNavbarButton('',symbolToIconName[n]))
+        n['disabled'] = ('','disabled')[n['disabled']]
+        if n['label'] in symbolToIconName.keys():
+            n['label'] = symbolToIconName[n['label']]
+
+        button.append(makeNavbarButton(n))
     return '\n'.join(button)
 
 
@@ -87,7 +87,23 @@ def search():
     if query == None:
         return redirect('/')
 
-    return 'hello'
+    #return 'hello'
+
+    query = ['query']
+    results = ['A','B','C']
+    navbar = [{'disabled':False,
+              'label':'|<'},
+              {'disabled':False,
+              'label':'<'},
+              {'disabled':True,
+              'label':1},
+              {'disabled':False,
+              'label':2},
+              {'disabled':False,
+              'label':2}]
+
+
+    return makeResults(query,results,navbar)
 
     #results = db.query(query)
     #return makeResults([query],results[:10],['|<',1,2,3,4])

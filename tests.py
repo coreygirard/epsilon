@@ -102,7 +102,7 @@ if __name__ == '__main__':
 
 
 #problem staff near leader resource.
-'''
+dummy = '''
 [{'text': 'enough yeah. surface theory. pretty condition.',
   'title': 'Out_Analysis_Year'},
  {'text': "discussion southern computer n't. young certain lay much.",
