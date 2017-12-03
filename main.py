@@ -87,8 +87,10 @@ def search():
     if query == None:
         return redirect('/')
 
-    results = db.query(query)
-    return makeResults([query],results[:10],['|<',1,2,3,4])
+    return 'hello'
+
+    #results = db.query(query)
+    #return makeResults([query],results[:10],['|<',1,2,3,4])
 
 
 

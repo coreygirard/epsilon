@@ -90,6 +90,7 @@ class TestQuery(unittest.TestCase):
         self.assertEqual(db.queryWord(u'disease'),['On Month Interview','Using Previous Words'])
         self.assertEqual(db.queryWord(u'because'),['Using Previous Words','Simply Pm'])
         self.assertEqual(db.queryWord(u'nonexistent'),[])
+        self.assertEqual(db.query(u'nonexistent'),[])
 
 
 
