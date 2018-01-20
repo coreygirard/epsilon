@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+.DS_Store
+
+wikipedia-en-html.tar.7z
+wikipedia-en-html.tar
+wikipedia-simple-html.tar.7z
+wikipedia-simple-html.tar
+corpus/simple/*
